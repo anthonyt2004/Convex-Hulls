@@ -26,14 +26,14 @@ The notebook additionally expects Jupyter.
 - [`benchmarking.py`](./benchmarking.py): timing and plotting benchmarks
 
 ## Module Details
-### `datasets.py`
+### [`datasets.py`](./datasets.py)
 Point generators used in experiments and benchmarks.
 - `dataset_A(n)`: random points + the 4 corners of a unit square, rotated.
 - `dataset_B(n)`: uniform random points in the unit square.
 - `dataset_C(n)`: uniform random points in the unit disk.
 - `dataset_D(n)`: points on the unit circle.
 
-### `geometry.py`
+### [`geometry.py`](./geometry.py)
 Core geometric helpers used by the algorithms.
 - `is_clockwise(A, B, C)`: orientation test for turn direction.
 - `are_collinear(A, B, C)`: checks if three points are collinear.
@@ -44,21 +44,21 @@ Core geometric helpers used by the algorithms.
 - `find_upper_basis(x_m, points)`: finds a supporting upper line (basis) around the separator.
 - `get_rotation_angle(vec1, vec2)`: positive rotation from `vec1` to `vec2` in `[0, 2π)`.
 
-### `sweeping_algorithm.py`
+### [`sweeping_algorithm.py`](./sweeping_algorithm.py)
 Monotonic chain (sweeping) hull construction.
 - `compute_convex_hull_1(points)`: full convex hull (uses upper/lower chain helpers internally).
 
-### `output_sensitive_algorithm.py`
+### [`output_sensitive_algorithm.py`](./output_sensitive_algorithm.py)
 Output‑sensitive upper hull construction with recursion.
 - `compute_convex_hull_2(points)`: full convex hull (recursive upper hull + symmetric lower hull).
 
-### `windmill_algorithm.py`
+### [`windmill_algorithm.py`](./windmill_algorithm.py)
 Gift‑wrapping / windmill process implementations.
 - `compute_convex_hull_3(points)`: classic orientation‑based gift wrapping.
 - `compute_convex_hull_4(points)`: angle‑based windmill variant.
 
-### `visualization.py`
+### [`visualization.py`](./visualization.py)
 Helpers to plot datasets, hulls, and windmill steps for explanation and checks.
 
-### `benchmarking.py`
+### [`benchmarking.py`](./benchmarking.py)
 Helpers to time algorithms and plot performance curves.
