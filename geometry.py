@@ -9,6 +9,13 @@ def is_clockwise(A, B, C):
     return cross_prod < 0
 
 
+def are_collinear(A, B, C):
+    AB = B[0] - A[0], B[1] - A[1]
+    AC = C[0] - A[0], C[1] - A[1]
+    cross_prod = AB[0]*AC[1] - AB[1]*AC[0]
+    return cross_prod == 0
+
+
 def sort_points(points):
     return sorted(points)
 
