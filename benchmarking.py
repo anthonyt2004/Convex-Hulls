@@ -35,29 +35,3 @@ def smooth_curve(curve, window_len=10):
 
 def smooth_benchmarks(benchmarks, window_len=10, strip=0):
     return [smooth_curve(benchmark[strip:], window_len) for benchmark in benchmarks]
-
-
-def plot_benchmarks(dataset_sizes, benchmarks, y_labels):
-    num_plots = len(benchmarks)
-    fig, axes = plt.subplots(num_plots, 1, figsize=(10, 4 * num_plots))
-
-    if num_plots == 1:
-        axes = [axes]
-
-    for i, (data, label) in enumerate(zip(benchmarks, y_labels)):
-        axes[i].plot(dataset_sizes, data)
-        axes[i].set_xlabel("Dataset size (n)")
-        axes[i].set_ylabel(label)
-        axes[i].set_title(f"Benchmark: {label}")
-        axes[i].grid(True, linestyle='--', alpha=0.7)
-
-    plt.tight_layout()
-    plt.show()
-
-
-def plot_smooth_benchmarks(dataset_sizes, benchmarks, y_labels, window_len=10, strip=0):
-    plot_benchmarks(
-        dataset_sizes[strip:], 
-        smooth_benchmarks(benchmarks, window_len, strip), 
-        y_labels
-    )

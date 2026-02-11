@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from random import randint
 from geometry import is_clockwise
 from datasets import dataset_A, dataset_B, dataset_C, dataset_D
+from benchmarking import smooth_benchmarks
 
 
 def test_dataset(dataset_generation_function, dataset_sizes):
@@ -128,5 +129,67 @@ def visualize_windmill_steps(points, num_frames=None):
     for i in range(min(frames_to_show, len(hull_sequence) + 1), len(axes)):
         axes[i].axis('off')
     
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_benchmarks(dataset_sizes, benchmarks, y_labels):
+    num_plots = len(benchmarks)
+    fig, axes = plt.subplots(num_plots, 1, figsize=(10, 4 * num_plots))
+
+    if num_plots == 1:
+        axes = [axes]
+
+    for i, (data, label) in enumerate(zip(benchmarks, y_labels)):
+        axes[i].plot(dataset_sizes, data)
+        axes[i].set_xlabel("Dataset size (n)")
+        axes[i].set_ylabel(label)
+        axes[i].set_title(f"Benchmark: {label}")
+        axes[i].grid(True, linestyle='--', alpha=0.7)
+
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_smooth_benchmarks(dataset_sizes, benchmarks, y_labels, window_len=10, strip=0):
+    plot_benchmarks(
+        dataset_sizes[strip:], 
+        smooth_benchmarks(benchmarks, window_len, strip), 
+        y_labels
+    )
+
+
+def plot_overlay(
+    dataset_sizes,
+    benchmark_1,
+    benchmark_2,
+    legends_1,
+    legends_2,
+    y_label,
+    title,
+    strip=0,
+    window_len=10,
+):
+    dataset_colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red']
+    smoothed_1 = smooth_benchmarks(benchmark_1, window_len=window_len, strip=strip)
+    smoothed_2 = smooth_benchmarks(benchmark_2, window_len=window_len, strip=strip)
+
+    plt.figure(figsize=(12, 7))
+
+    for i, curve in enumerate(smoothed_1):
+        color = dataset_colors[i + 1 % len(dataset_colors)]
+        label = f"{legends_1[i]} - Sweeping Algorithm"
+        plt.plot(dataset_sizes[strip:], curve, color=color, linestyle='-', label=label)
+
+    for i, curve in enumerate(smoothed_2):
+        color = dataset_colors[i % len(dataset_colors)]
+        label = f"{legends_2[i]} - Output-sensitive algorithm"
+        plt.plot(dataset_sizes[strip:], curve, color=color, linestyle='--', label=label)
+
+    plt.xlabel('Dataset size (n)')
+    plt.ylabel(y_label)
+    plt.title(title)
+    plt.grid(True, linestyle='--', alpha=0.5)
+    plt.legend(loc='best', fontsize=9, ncol=2)
     plt.tight_layout()
     plt.show()
