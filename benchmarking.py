@@ -1,7 +1,8 @@
 from time import perf_counter_ns
+from geometry import rotate_hull
 from tqdm.auto import tqdm
 import gc
-import matplotlib.pyplot as plt
+
 
 
 def get_benchmarks(dataset_sizes, convex_hull_algorithm, dataset_generation_functions):

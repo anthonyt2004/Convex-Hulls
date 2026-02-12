@@ -105,3 +105,8 @@ def get_rotation_angle(vec1, vec2):
         angle_diff += 2 * pi
     
     return angle_diff
+
+
+def rotate_hull(hull):
+    min_index = hull.index(min(hull))
+    return hull[min_index:] + hull[:min_index]
